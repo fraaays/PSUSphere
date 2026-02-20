@@ -17,3 +17,4 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = "__all__"
+        
