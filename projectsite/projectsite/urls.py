@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from studentorg import views
-from studentorg.views import HomePageView, OrganizationList, OrganizationCreateView, OrganizationUpdateView, OrganizationDeleteView, OrgMemberList, OrgMemberCreateView, OrgMemberUpdateView
+from studentorg.views import HomePageView, OrganizationList, OrganizationCreateView, OrganizationUpdateView, OrganizationDeleteView, OrgMemberList, OrgMemberCreateView, OrgMemberUpdateView, OrgMemberDeleteView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", HomePageView.as_view(), name="home"),
@@ -35,5 +35,6 @@ urlpatterns = [
     path('org_member_list', OrgMemberList.as_view(), name='OrgMember-list'),
     path('org_member_list/add', OrgMemberCreateView.as_view(), name='orgmember-add'),
     path('org_member_list/<pk>',OrgMemberUpdateView.as_view(), name='orgmember-update'),
+    path('org_member_list/<pk>/delete', OrgMemberDeleteView.as_view(), name='orgmember-delete'),
 ]
 
