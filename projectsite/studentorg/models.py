@@ -8,6 +8,12 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
+    
+class Dashboard(models.Model):
+    class Meta:
+        abstract = True
+
+
 class College(BaseModel):
     college_name = models.CharField(max_length=150)
 

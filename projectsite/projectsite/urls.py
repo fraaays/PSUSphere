@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from studentorg import views
-from studentorg.views import HomePageView, OrganizationList, OrganizationCreateView, OrganizationUpdateView, OrganizationDeleteView, OrgMemberList, OrgMemberCreateView, OrgMemberUpdateView, OrgMemberDeleteView, StudentList, StudentCreateView, StudentUpdateView, StudentDeleteView
+from studentorg.views import DashboardView, HomePageView, OrganizationList, OrganizationCreateView, OrganizationUpdateView, OrganizationDeleteView, OrgMemberList, OrgMemberCreateView, OrgMemberUpdateView, OrgMemberDeleteView, StudentList, StudentCreateView, StudentUpdateView, StudentDeleteView, CollegeList, CollegeCreateView, CollegeUpdateView, CollegeDeleteView, ProgramList, ProgramCreateView, ProgramUpdateView, ProgramDeleteView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", HomePageView.as_view(), name="home"),
@@ -41,5 +41,16 @@ urlpatterns = [
     path('student_list/add', StudentCreateView.as_view(), name='student-add'),
     path('student_list/<pk>',StudentUpdateView.as_view(), name='student-update'),
     path('student_list/<pk>/delete', StudentDeleteView.as_view(), name='student-delete'),
+    path('', views.HomePageView.as_view(), name='home'),
+    path('college_list', CollegeList.as_view(), name='College-list'),
+    path('college_list/add', CollegeCreateView.as_view(), name='college-add'),
+    path('college_list/<pk>', CollegeUpdateView.as_view(), name='college-update'),
+    path('college_list/<pk>/delete', CollegeDeleteView.as_view(), name='college-delete'),
+    path('', views.HomePageView.as_view(), name='home'),
+    path('program_list', ProgramList.as_view(), name='Program-list'),
+    path('program_list/add', ProgramCreateView.as_view(), name='program-add'),
+    path('program_list/<pk>', ProgramUpdateView.as_view(), name='program-update'),
+    path('program_list/<pk>/delete', ProgramDeleteView.as_view(), name='program-delete'),
+    path('dashboard', DashboardView.as_view(), name='Dashboard'),
 ]
 
