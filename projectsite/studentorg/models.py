@@ -8,11 +8,6 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-    
-class Dashboard(models.Model):
-    class Meta:
-        abstract = True
-
 
 class College(BaseModel):
     college_name = models.CharField(max_length=150)
@@ -49,3 +44,6 @@ class OrgMember(BaseModel):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     date_joined = models.DateField()
+    
+    def __str__(self):
+        return f"{self.student}' membership"
