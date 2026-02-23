@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Organization, OrgMember, Student, College, Program, Dashboard
+from .models import Organization, OrgMember, Student, College, Program
 
 
 class OrganizationForm(ModelForm):
@@ -26,9 +26,4 @@ class CollegeForm(ModelForm):
 class ProgramForm(ModelForm):
     class Meta:
         model = Program
-        fields = "__all__"
-
-class DashboardForm(ModelForm):
-    class Meta:
-        model = Dashboard
         fields = "__all__"

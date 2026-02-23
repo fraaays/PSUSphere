@@ -1,50 +1,39 @@
 from django.shortcuts import render
 
 from django.views.generic.list import ListView
-from django.views.generic import TemplateView
 
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from studentorg.models import Organization, OrgMember, Student, College, Program, Dashboard
+from studentorg.models import Organization, OrgMember, Student, College, Program
 from studentorg.forms import OrganizationForm, OrgMemberForm, StudentForm, CollegeForm, ProgramForm
 from django.urls import reverse_lazy
 
 from django.db.models import Q
 from django.utils import timezone
-
-class DashboardView(TemplateView):
-    model = Dashboard
-    context_object_name = 'Dashboard'
-    template_name = "Dashboard.html"
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['college_count'] = College.objects.count()
-        context['program_count'] = Program.objects.count()
-        context['student_count'] = Student.objects.count()
-        context['organization_count'] = Organization.objects.count()
-        return context
+    
 
 class HomePageView(ListView):
     model = Organization
     context_object_name = 'home'
     template_name = "home.html"
     
-def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context["total_students"] = Student.objects.count()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total_students"] = Student.objects.count()
 
-    today = timezone.now().date()
-    count = (
-        OrgMember.objects.filter(
-            date_joined__year=today.year
+        today = timezone.now().date()
+        count = (
+            OrgMember.objects.filter(
+                date_joined__year=today.year
+            )
+            .values("student")
+            .distinct()
+            .count()
         )
-        .values("student")
-        .distinct()
-        .count()
-    )
 
-    context["students_joined_this_year"] = count
-    return context
+        context["students_joined_this_year"] = count
+        return context
+    
 
     
 class OrganizationList(ListView):
@@ -53,15 +42,6 @@ class OrganizationList(ListView):
     template_name = 'org_list.html'
     paginate_by = 5
     ordering = ["college__college_name","name"]
-    
-    def get_ordering(self):
-        allowed = ["prog_name", "college__college_name"]
-        sort_by = self.request.GET.get("sort_by")
-
-        if sort_by in allowed:
-            return sort_by
-
-        return "prog_name"
     
     def get_queryset(self):
         qs = super().get_queryset()
@@ -165,6 +145,14 @@ class ProgramList(ListView):
     context_object_name = 'Program'
     template_name = 'Program_list.html'
     paginate_by = 5
+    def get_ordering(self):
+        allowed = ["prog_name", "college__college_name"]
+        sort_by = self.request.GET.get("sort_by")
+
+        if sort_by in allowed:
+            return sort_by
+
+        return "prog_name"
 
 class ProgramCreateView(CreateView):
     model = Program
