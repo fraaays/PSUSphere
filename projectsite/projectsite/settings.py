@@ -159,5 +159,3 @@ ACCOUNT_SIGNUP_FIELDS = [
     "password1*",
     "password2*",
 ]
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'frice.pythonanywhere.com']
